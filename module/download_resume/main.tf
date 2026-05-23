@@ -1,3 +1,8 @@
+data "aws_wafv2_web_acl" "waf" {
+  name  = "cloudfront-waf-gary-infra"
+  scope = "CLOUDFRONT"
+}
+
 #######################################
 # S3 Bucket
 #######################################
@@ -43,7 +48,7 @@ resource "aws_cloudfront_origin_access_control" "oac" {
 }
 
 resource "aws_cloudfront_distribution" "cloudfront" {
-
+  comment = "CloudFront to an WAF and then to S3 Bucket"
   origin {
     domain_name = aws_s3_bucket.resume_files_bucket.bucket_regional_domain_name
     origin_id   = "s3-origin"
@@ -78,8 +83,8 @@ resource "aws_cloudfront_distribution" "cloudfront" {
     cloudfront_default_certificate = true
   }
 
-  web_acl_id = aws_wafv2_web_acl.waf.arn
-
+  web_acl_id = data.aws_wafv2_web_acl.waf.arn
+  
   tags = {
     Project = var.project_name
     Name = "cloudfront-${var.project_name}"
