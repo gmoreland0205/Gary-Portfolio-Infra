@@ -17,15 +17,15 @@ data "aws_lb_target_group" "alb_tg" {
 }
 
 data "aws_security_group" "alb_http_sg" {
-  name = "alb-http-sg-gary-infra"
+  name = "alb-http-security-group-gary-infra"
 }
 
 data "aws_security_group" "alb_https_sg" {
-  name = "alb-https-sg-gary-infra"
+  name = "alb-https-security-group-gary-infra"
 }
 
 data "aws_security_group" "bastion_sg" {
-  name = "terraform-20260520143733140200000005"
+  name = "bastion_security_group_gary-infra"
 }
 
 data "aws_subnet" "private" {
